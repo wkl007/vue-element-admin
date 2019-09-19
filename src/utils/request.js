@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Message } from 'element-ui'
 import store from '@/store'
 
 const service = axios.create({
@@ -34,14 +35,15 @@ service.interceptors.response.use(response => {
       window.location.reload()
     }
     if (!message) return
+    Message.error(message)
     return Promise.reject(res)
   }
 }, error => {
   const errorString = error.toString()
   if (errorString.includes('timeout')) {
-    Toast({ message: '接口请求超时' })
+    Message.error('接口请求超时')
   } else if (errorString.includes('Network Error')) {
-    Toast({ message: '网络故障，请稍后再试' })
+    Message.error('网络故障，请稍后再试')
   }
   return Promise.reject(error)
 })
