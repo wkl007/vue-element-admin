@@ -1,7 +1,11 @@
 const path = require('path')
+const defaultSettings = require('./src/utils/setting')
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')// 去console插件
 const CompressionWebpackPlugin = require('compression-webpack-plugin')// gzip压缩插件
+
+const name = defaultSettings.title
+
 function resolve (dir) { return path.join(__dirname, dir) }
 
 module.exports = {
@@ -31,6 +35,7 @@ module.exports = {
   integrity: false,
   // webpack配置
   configureWebpack: config => {
+    config.name = name
     const plugins = [
       new UglifyJsPlugin({
         uglifyOptions: {

@@ -153,12 +153,15 @@ Vue.use(Backtop)
 Vue.use(PageHeader)
 Vue.use(CascaderPanel)
 
-Vue.use(Loading.directive)
+const { directive: loadingDirective, service: loadingService } = Loading
+const msgBox = MessageBox
+const { alert, confirm, prompt } = msgBox
+Vue.use(loadingDirective)
 
-Vue.prototype.$loading = Loading.service
-Vue.prototype.$msgbox = MessageBox
-Vue.prototype.$alert = MessageBox.alert
-Vue.prototype.$confirm = MessageBox.confirm
-Vue.prototype.$prompt = MessageBox.prompt
+Vue.prototype.$loading = loadingService
+Vue.prototype.$msgbox = msgBox
+Vue.prototype.$alert = alert
+Vue.prototype.$confirm = confirm
+Vue.prototype.$prompt = prompt
 Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message

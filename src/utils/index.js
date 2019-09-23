@@ -1,3 +1,5 @@
+import defaultSettings from '@/utils/setting'
+
 /**
  * 判断url
  * @param path
@@ -170,4 +172,14 @@ export function checkTimestampValid (timestamp, validityPeriod = 24) {
   if (currentDate.getHours() - targetDate.getHours() > validityPeriod) return false
   // if (currentDate.getMinutes() - targetDate.getMinutes() > 1)return false;
   return true
+}
+
+/**
+ * 获取页面标题
+ * @param pageTitle
+ * @returns {string}
+ */
+export function getPageTitle (pageTitle = '') {
+  const title = defaultSettings.title
+  return pageTitle ? `${pageTitle} - ${title}` : `${title}`
 }
