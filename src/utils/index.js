@@ -183,3 +183,38 @@ export function getPageTitle (pageTitle = '') {
   const title = defaultSettings.title
   return pageTitle ? `${pageTitle} - ${title}` : `${title}`
 }
+
+/**
+ * 使用meta.role确定当前用户是否具有权限
+ * @param roles 角色数组
+ * @param route 路由信息
+ * @returns {boolean}
+ */
+export function hasPermission (roles, route) {
+  if (route.meta && route.meta.roles) {
+    return roles.some(role => route.meta.roles.includes(role))
+  } else {
+    return true
+  }
+}
+
+/**
+ * 通过递归过滤异步路由表
+ * @param routes 异步路由
+ * @param roles 角色数组
+ * @returns {[]}
+ */
+export function filterAsyncRoutes (routes, roles) {
+  const result = []
+  routes.forEach(route => {
+    const temp = { ...route }
+    console.log(temp)
+    if (hasPermission(roles, temp)) {
+      if (temp.children) {
+        temp.children = filterAsyncRoutes(temp.children, roles)
+      }
+      result.push(temp)
+    }
+  })
+  return result
+}

@@ -35,7 +35,7 @@
 
     .content {
       flex: 1;
-      padding: 32px 0;
+      padding: 112px 0 24px 0;
     }
 
     .top {
@@ -76,10 +76,6 @@
       background-repeat: no-repeat;
       background-position: center 110px;
       background-size: 100%;
-
-      .content {
-        padding: 112px 0 24px 0;
-      }
     }
   }
 </style>

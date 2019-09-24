@@ -30,7 +30,7 @@ service.interceptors.response.use(response => {
   } else {
     // token过期重新登录
     if (message === 'TOKEN_NOT_EMPTY' || message === 'INVALID_TOKEN') {
-      store.dispatch('setLoginStatus', 0)
+      store.dispatch('setLoginStatus', false)
       // 重新登录
       window.location.reload()
     }

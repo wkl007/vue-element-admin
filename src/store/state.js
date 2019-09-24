@@ -1,9 +1,13 @@
-import { loadSessionStorage, LOGIN_STATUS, ACCESS_TOKEN, USER_INFO } from '@/utils/cache'
+import { ACCESS_TOKEN, loadSessionStorage, LOGIN_STATUS } from '@/utils/cache'
 
 const state = {
   loginStatus: loadSessionStorage(LOGIN_STATUS, false),
   accessToken: loadSessionStorage(ACCESS_TOKEN, ''),
-  userInfo: loadSessionStorage(USER_INFO, {}),
+  userInfo: {},
+  permission: {
+    asyncRoutes: [],
+    routes: []
+  }
 }
 
 export default state

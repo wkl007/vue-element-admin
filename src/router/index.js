@@ -42,13 +42,44 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/',
+    component: BasicLayout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import(/* webpackChunkName: "dashboard" */'@/views/dashboard'),
+        meta: {
+          title: 'Dashboard',
+          icon: 'dashboard'
+        }
+      }
+    ]
+  },
+  {
+    path: '/exception',
+    component: BasicLayout,
+    children: [
+      {
+        path: '404',
+        hidden: true,
+        component: () => import(/* webpackChunkName: "404" */'@/views/exception/404'),
+        meta: {
+          title: '404'
+        }
+      }
+    ]
+  },
+  {
     path: '/404',
-    component: () => import(/* webpackChunkName: "404" */'@/views/exception/404'),
-    hidden: true,
-    meta: {
-      title: '登录'
-    }
+    redirect: '/exception/404',
+    hidden: true
   }
+]
+
+export const asyncRoutes = [
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

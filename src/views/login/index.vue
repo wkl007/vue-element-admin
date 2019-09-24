@@ -96,7 +96,16 @@
         redirect: ''
       }
     },
+    watch: {
+      $route: {
+        handler (route) {
+          this.redirect = route.query && route.query.redirect
+        },
+        immediate: true
+      }
+    },
     methods: {
+      // 切换密码框类型
       togglePasswordType () {
         if (this.passwordType === 'password') {
           this.passwordType = 'text'
@@ -107,23 +116,47 @@
           this.$refs.password.focus()
         })
       },
+      // 登录
       handleLogin () {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
-
+            this.loginLoading = true
+            setTimeout(() => {
+              /* const userInfo = {
+                name: this.loginForm.username,
+                roles: [this.loginForm.username],
+                avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+              } */
+              this.loginLoading = false
+              this.setLoginStatus(true)
+              // this.setUserInfo(userInfo)
+              this.setAccessToken(`${this.loginForm.username}Token`)
+              this.$router.push({
+                path: '/'
+              })
+            }, 3000)
           } else {
             return false
           }
         })
-      }
-    }
+      },
+      ...mapActions(['setLoginStatus', 'setUserInfo', 'setAccessToken'])
+    },
   }
 </script>
 
 <style scoped lang="scss">
+  @import "~element-ui/packages/theme-chalk/src/common/var";
+
   .login {
     width: 368px;
     height: auto;
     margin: 0 auto;
+  }
+
+  @media (max-width: 576px) {
+    .login {
+      width: 95%;
+    }
   }
 </style>
