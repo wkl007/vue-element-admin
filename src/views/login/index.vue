@@ -122,19 +122,13 @@
           if (valid) {
             this.loginLoading = true
             setTimeout(() => {
-              /* const userInfo = {
-                name: this.loginForm.username,
-                roles: [this.loginForm.username],
-                avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-              } */
               this.loginLoading = false
               this.setLoginStatus(true)
-              // this.setUserInfo(userInfo)
               this.setAccessToken(`${this.loginForm.username}Token`)
               this.$router.push({
                 path: '/'
               })
-            }, 3000)
+            }, 1000)
           } else {
             return false
           }

@@ -43,3 +43,13 @@ export const setUserInfo = ({ commit, state }, query) => {
 export const setPermission = ({ commit, state }, query) => {
   commit(types.SET_PERMISSION, query)
 }
+
+/**
+ * 设置
+ * @param commit
+ * @param state
+ * @param query
+ */
+export const setSettings = ({ commit, state }, query) => {
+  commit(types.SET_SETTINGS, query)
+}

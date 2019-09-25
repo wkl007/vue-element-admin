@@ -30,10 +30,10 @@ export const constantRoutes = [
   {
     path: '/user',
     component: UserLayout,
+    hidden: true,
     children: [
       {
         path: 'login',
-        hidden: true,
         component: () => import(/* webpackChunkName: "login" */'@/views/login'),
         meta: {
           title: '登录'
@@ -51,8 +51,8 @@ export const constantRoutes = [
         name: 'Dashboard',
         component: () => import(/* webpackChunkName: "dashboard" */'@/views/dashboard'),
         meta: {
-          title: 'Dashboard',
-          icon: 'dashboard'
+          title: '仪表板',
+          icon: 'el-icon-s-home'
         }
       }
     ]
@@ -60,10 +60,10 @@ export const constantRoutes = [
   {
     path: '/exception',
     component: BasicLayout,
+    hidden: true,
     children: [
       {
         path: '404',
-        hidden: true,
         component: () => import(/* webpackChunkName: "404" */'@/views/exception/404'),
         meta: {
           title: '404'

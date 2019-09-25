@@ -1,4 +1,4 @@
-import defaultSettings from '@/utils/setting'
+import defaultSettings from '@/utils/settings'
 
 /**
  * 判断url
@@ -208,7 +208,6 @@ export function filterAsyncRoutes (routes, roles) {
   const result = []
   routes.forEach(route => {
     const temp = { ...route }
-    console.log(temp)
     if (hasPermission(roles, temp)) {
       if (temp.children) {
         temp.children = filterAsyncRoutes(temp.children, roles)
@@ -217,4 +216,13 @@ export function filterAsyncRoutes (routes, roles) {
     }
   })
   return result
+}
+
+/**
+ * 外部url
+ * @param path
+ * @returns {boolean}
+ */
+export function isExternalUrl (path) {
+  return /^(https?:|mailto:|tel:)/.test(path)
 }

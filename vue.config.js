@@ -1,5 +1,5 @@
 const path = require('path')
-const defaultSettings = require('./src/utils/setting')
+const defaultSettings = require('./src/utils/settings')
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')// 去console插件
 const CompressionWebpackPlugin = require('compression-webpack-plugin')// gzip压缩插件

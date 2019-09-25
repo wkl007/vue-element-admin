@@ -12,6 +12,9 @@ const mutations = {
   },
   [types.SET_PERMISSION] (state, permission) {
     state.permission = permission
+  },
+  [types.SET_SETTINGS] (state, settings) {
+    state.settings = settings
   }
 }
 

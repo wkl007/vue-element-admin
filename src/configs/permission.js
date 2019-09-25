@@ -1,6 +1,6 @@
 import { Message } from 'element-ui'
 import NProgress from 'nprogress'
-import router, { constantRoutes, asyncRoutes } from '@/router'
+import router, { constantRoutes, asyncRoutes, resetRouter } from '@/router'
 import store from '@/store'
 import { filterAsyncRoutes, getPageTitle } from '@/utils'
 
@@ -23,19 +23,37 @@ router.beforeEach(async (to, from, next) => {
         next()
         NProgress.done()
       } else {
-        // 获取用户信息及角色信息
-        const userInfo = {
-          name: 'admin',
-          roles: ['admin'],
-          avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+        try {
+          // 获取用户信息及角色信息
+          const userInfo = {
+            name: 'admin',
+            roles: ['admin'],
+            avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+          }
+          await store.dispatch('setUserInfo', userInfo)
+
+          const accessedRoutes = await generateRoutes(userInfo.roles) || []
+
+          router.addRoutes(accessedRoutes)
+
+          next({ ...to, replace: true })
+
+          NProgress.done()
+        } catch (err) {
+          await store.dispatch('setLoginStatus', false)
+          await store.dispatch('setAccessToken', '')
+          await store.dispatch('setUserInfo', {})
+          await store.dispatch('setPermission', {
+            asyncRoutes: [],
+            routes: []
+          })
+
+          resetRouter()
+          Message.error(err || '系统错误')
+          next(`/user/login?redirect=${to.path}`)
+
+          NProgress.done()
         }
-        await store.dispatch('setUserInfo', userInfo)
-
-        const accessedRoutes = await generateRoutes(userInfo.roles) || []
-
-        router.addRoutes(accessedRoutes)
-
-        next({ ...to, replace: true })
       }
     }
   } else {
@@ -61,17 +79,21 @@ router.afterEach(() => {
  */
 function generateRoutes (roles) {
   return new Promise(async (resolve, reject) => {
-    let accessedRoutes = []
-    if (roles.includes('admin')) {
-      accessedRoutes = asyncRoutes || []
-    } else {
-      accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+    try {
+      let accessedRoutes = []
+      if (roles.includes('admin')) {
+        accessedRoutes = asyncRoutes || []
+      } else {
+        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      }
+      const permission = {
+        asyncRoutes: accessedRoutes,
+        routes: [...constantRoutes, ...accessedRoutes]
+      }
+      await store.dispatch('setPermission', permission)
+      resolve(accessedRoutes)
+    } catch (err) {
+      reject(err)
     }
-    const permission = {
-      asyncRoutes: accessedRoutes,
-      routes: [...constantRoutes, ...accessedRoutes]
-    }
-    await store.dispatch('setPermission', permission)
-    resolve(accessedRoutes)
   })
 }

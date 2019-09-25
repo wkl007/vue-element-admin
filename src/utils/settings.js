@@ -1,5 +1,6 @@
 module.exports = {
   title: '小王管理系统',
+
   /**
    * @type {boolean} true | false
    * @description Whether fix the header
@@ -10,5 +11,13 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false
+  sidebarLogo: true,
+
+  showSettings: true,
+
+  openSideMenu: true,
+
+  withoutAnimation: false,
+
+  device: 'desktop'
 }

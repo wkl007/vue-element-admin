@@ -57,6 +57,7 @@ import {
   RadioGroup,
   Rate,
   Row,
+  Scrollbar,
   Select,
   Slider,
   Spinner,
@@ -152,6 +153,7 @@ Vue.use(Calendar)
 Vue.use(Backtop)
 Vue.use(PageHeader)
 Vue.use(CascaderPanel)
+Vue.use(Scrollbar)
 
 const { directive: loadingDirective, service: loadingService } = Loading
 const msgBox = MessageBox
