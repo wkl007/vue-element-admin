@@ -1,17 +1,40 @@
 <template>
   <div class="dashboard">
-    主页
+    <p class="dashboard-text">
+      姓名：
+      <span>{{userInfo.name}}</span>
+    </p>
+    <p class="dashboard-text">
+      角色：
+      <span
+        v-for="(item,index) in userInfo.roles"
+        :key="index"
+      >
+        {{item}}
+      </span>
+    </p>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
-    name: 'Login'
+    name: 'Dashboard',
+    computed: {
+      ...mapGetters(['userInfo'])
+    }
   }
 </script>
 
 <style scoped lang="scss">
   .dashboard {
-    height: auto;
+    margin: 30px;
+
+    &-text {
+      margin: 0;
+      font-size: 30px;
+      line-height: 46px;
+    }
   }
 </style>

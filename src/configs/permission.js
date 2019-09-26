@@ -12,7 +12,7 @@ router.beforeEach(async (to, from, next) => {
   NProgress.start()
 
   document.title = getPageTitle(to.meta.title)
-  const { loginStatus, userInfo: { roles } } = store.getters
+  const { loginStatus, userInfo: { roles }, accessToken } = store.getters
   if (loginStatus) {
     if (to.path === '/user/login') {
       next({ path: '/' })
@@ -26,10 +26,11 @@ router.beforeEach(async (to, from, next) => {
         try {
           // 获取用户信息及角色信息
           const userInfo = {
-            name: 'admin',
-            roles: ['admin'],
+            name: accessToken.includes('admin') ? 'admin' : 'normal',
+            roles: accessToken.includes('admin') ? ['admin'] : ['normal'],
             avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
           }
+
           await store.dispatch('setUserInfo', userInfo)
 
           const accessedRoutes = await generateRoutes(userInfo.roles) || []

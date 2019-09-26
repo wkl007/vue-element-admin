@@ -43,6 +43,7 @@
 
 <script>
   import path from 'path'
+  import { mapGetters } from 'vuex'
   import { isExternalUrl } from '@/utils'
   import SideMenuLink from '@/components/SideMenu/Link'
 
@@ -72,8 +73,14 @@
         onlyOneChild: ''
       }
     },
+    computed: {
+      ...mapGetters(['settings'])
+    },
     created () {
       this.hasOneShowChild(this.item.children, this.item)
+    },
+    mounted () {
+      this.fixBugIniOS()
     },
     methods: {
       hasOneShowChild (children = [], parent) {
@@ -98,6 +105,16 @@
         if (isExternalUrl(routePath)) return routePath
         if (isExternalUrl(this.basePath)) return this.basePath
         return path.resolve(this.basePath, routePath)
+      },
+      fixBugIniOS () {
+        const $subMenu = this.$refs.subMenu
+        if ($subMenu) {
+          const handleMouseleave = $subMenu.handleMouseleave
+          $subMenu.handleMouseleave = (e) => {
+            if (this.settings.device === 'mobile') return
+            handleMouseleave(e)
+          }
+        }
       }
     }
   }

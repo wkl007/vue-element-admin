@@ -25,7 +25,8 @@
           >
             <span
               v-if="item.redirect==='noRedirect'||index===breadcrumbList.length-1"
-              class="no-redirect">
+              class="no-redirect"
+            >
               {{ item.meta.title }}
             </span>
             <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
@@ -77,13 +78,16 @@
         breadcrumbList: []
       }
     },
+    created () {
+      this.getBreadcrumb()
+    },
     methods: {
       // 获取面包屑
       getBreadcrumb () {
         let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
         const first = matched[0]
         if (!this.isDashboard(first)) {
-          matched = [{ path: '/dashboard', meta: { title: 'Dashboard' } }].concat(matched)
+          matched = [{ path: '/dashboard', meta: { title: '仪表板' } }].concat(matched)
         }
         this.breadcrumbList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
       },
@@ -104,7 +108,6 @@
         // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
         const { params } = this.$route
         let toPath = pathToRegexp.compile(path)
-        console.log(toPath)
         return toPath(params)
       },
       // 面包屑点击

@@ -1,23 +1,15 @@
 module.exports = {
-  title: '小王管理系统',
+  title: '小王管理系统', // 标题
 
-  /**
-   * @type {boolean} true | false
-   * @description Whether fix the header
-   */
-  fixedHeader: false,
+  fixedHeader: false, // 是否固定顶部
 
-  /**
-   * @type {boolean} true | false
-   * @description Whether show the logo in sidebar
-   */
-  sidebarLogo: true,
+  sideMenuLogo: true, // 是否显示侧导航logo
 
-  showSettings: true,
+  showSettings: true, // 是否显示设置
 
-  openSideMenu: true,
+  openSideMenu: true, // 是否显示侧导航
 
-  withoutAnimation: false,
+  withoutAnimation: false, // 是否显示动画
 
-  device: 'desktop'
+  device: 'desktop' // 当前设备信息 desktop tablet mobile
 }

@@ -1,6 +1,6 @@
 <template>
-  <div class="side-menu" :class="{'has-logo':settings.sidebarLogo}">
-    <side-menu-logo v-if="settings.sidebarLogo" :collapse="!settings.openSideMenu"/>
+  <div class="side-menu" :class="{'has-logo':settings.sideMenuLogo}">
+    <side-menu-logo v-if="settings.sideMenuLogo" :collapse="!settings.openSideMenu"/>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
@@ -111,8 +111,8 @@
       color: $subMenuActiveText !important;
     }
 
-    &.nest-menu .el-submenu > .el-submenu__title,
-    &.el-submenu .el-menu-item {
+    & .nest-menu .el-submenu > .el-submenu__title,
+    & .el-submenu .el-menu-item {
       min-width: $sideBarWidth !important;
       background-color: $subMenuBg !important;
 
@@ -182,12 +182,12 @@
   // mobile responsive
   .mobile {
     .main-container {
-      margin-left: 0;
+      margin-left: 0 !important;
     }
 
     .side-menu {
       width: $sideBarWidth !important;
-      transition: transform 0.28s;
+      transition: transform 0.28s !important;
     }
 
     &.hideSideBar {

@@ -18,7 +18,7 @@
           name="username"
           type="text"
           tabindex="1"
-          :maxlength="5"
+          :maxlength="6"
         ></el-input>
       </el-form-item>
       <el-form-item
@@ -53,15 +53,31 @@
       >
         登录
       </el-button>
+      <p class="tips">
+        <span style=" margin-right: 20px;">
+          管理员用户名：admin
+        </span>
+        <span>
+          密码：888888
+        </span>
+      </p>
+      <p class="tips">
+        <span style="margin-right: 20px;">
+          普通用户名：normal
+        </span>
+        <span>
+          密码：888888
+        </span>
+      </p>
     </el-form>
   </div>
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapActions } from 'vuex'
 
   const validUsername = (str) => {
-    const valid_map = ['admin', 'editor']
+    const valid_map = ['admin', 'normal']
     return valid_map.indexOf(str.trim()) >= 0
   }
 
@@ -134,7 +150,7 @@
           }
         })
       },
-      ...mapActions(['setLoginStatus', 'setUserInfo', 'setAccessToken'])
+      ...mapActions(['setLoginStatus', 'setAccessToken'])
     },
   }
 </script>
@@ -146,6 +162,19 @@
     width: 368px;
     height: auto;
     margin: 0 auto;
+
+    .tips {
+      display: flex;
+      margin: 10px 0;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 14px;
+
+      span {
+        &:first-child {
+          width: 200px;
+        }
+      }
+    }
   }
 
   @media (max-width: 576px) {

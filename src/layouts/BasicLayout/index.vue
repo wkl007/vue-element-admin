@@ -1,6 +1,10 @@
 <template>
   <div class="basic-layout" :class="classObj">
-    <div v-if="settings.device==='mobile'" class="drawer-bg"></div>
+    <div
+      v-if="settings.device==='mobile'&&settings.openSideMenu"
+      class="drawer-bg"
+      @click="handleSetting"
+    ></div>
     <side-menu/>
     <div class="main-container">
       <div :class="{'fixed-header':settings.fixedHeader}">
@@ -16,12 +20,14 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import SideMenu from '@/components/SideMenu'
   import NavBar from '@/components/NavBar'
+  import { resizeMixin } from '@/mixins'
 
   export default {
     name: 'BasicLayout',
+    mixins: [resizeMixin],
     components: {
       SideMenu,
       NavBar
@@ -40,7 +46,15 @@
       },
       ...mapGetters(['settings'])
     },
-    methods: {}
+    methods: {
+      handleSetting () {
+        let settings = { ...this.settings }
+        settings.withoutAnimation = true
+        settings.openSideMenu = false
+        this.setSettings(settings)
+      },
+      ...mapActions(['setSettings'])
+    }
   }
 </script>
 
@@ -95,10 +109,12 @@
       .main-content {
         position: relative;
         width: 100%;
-
-        /* 50 = navbar */
         min-height: calc(100vh - 50px);
         overflow: hidden;
+
+        & > div {
+          padding: 20px;
+        }
       }
 
       .fixed-header + .main-content {

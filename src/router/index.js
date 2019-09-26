@@ -4,6 +4,11 @@ import Router from 'vue-router'
 const UserLayout = () => import(/* webpackChunkName: "userLayout" */'@/layouts/UserLayout')
 const BasicLayout = () => import(/* webpackChunkName: "basicLayout" */'@/layouts/BasicLayout')
 
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(Router)
 
 /**
@@ -17,7 +22,7 @@ Vue.use(Router)
  * redirect: 'noRedirect'         当设置 noRedirect 的时候该路由在面包屑导航中不可被点击
  * name:'router-name'             设定路由的名字，一定要填写不然使用<keep-alive>时会出现各种问题
  * meta : {
-    roles: ['admin','editor']    设置该路由进入的权限，支持多个权限叠加
+    roles: ['admin','normal']    设置该路由进入的权限，支持多个权限叠加
     title: 'title'               设置该路由在侧边栏和面包屑中展示的名字
     icon: 'svg-name'             设置该路由的图标
     breadcrumb: false            如果设置为false，则不会在breadcrumb面包屑中显示
@@ -58,6 +63,34 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/example',
+    component: BasicLayout,
+    redirect: '/example/table',
+    name: 'Example',
+    meta: {
+      title: '例子',
+      icon: 'el-icon-orange'
+    },
+    children: [
+      {
+        path: 'table',
+        name: 'Table',
+        component: () => import(/* webpackChunkName: "table" */'@/views/example/table'),
+        meta: {
+          title: '表格',
+        }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import(/* webpackChunkName: "table" */'@/views/example/tree'),
+        meta: {
+          title: '树',
+        }
+      }
+    ]
+  },
+  {
     path: '/exception',
     component: BasicLayout,
     hidden: true,
@@ -79,6 +112,82 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
+  {
+    path: '/form',
+    component: BasicLayout,
+    meta: {
+      roles: ['admin'],
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import(/* webpackChunkName: "form" */'@/views/form'),
+        meta: {
+          title: '表单',
+          icon: 'el-icon-s-platform',
+        }
+      }
+    ]
+  },
+  {
+    path: '/nested',
+    component: BasicLayout,
+    redirect: '/nested/menu1',
+    name: 'Nested',
+    meta: {
+      title: 'Nested',
+      icon: 'el-icon-more'
+    },
+    children: [
+      {
+        path: 'menu1',
+        component: () => import(/* webpackChunkName: "menu1" */'@/views/nested/menu1'),
+        name: 'Menu1',
+        meta: { title: 'Menu1' },
+        children: [
+          {
+            path: 'menu1-1',
+            component: () => import(/* webpackChunkName: "menu1-1" */'@/views/nested/menu1/menu1-1'),
+            name: 'Menu1-1',
+            meta: { title: 'Menu1-1' }
+          },
+          {
+            path: 'menu1-2',
+            component: () => import(/* webpackChunkName: "menu1-2" */'@/views/nested/menu1/menu1-2'),
+            name: 'Menu1-2',
+            meta: { title: 'Menu1-2' },
+            children: [
+              {
+                path: 'menu1-2-1',
+                component: () => import(/* webpackChunkName: "menu1-2-1" */'@/views/nested/menu1/menu1-2/menu1-2-1'),
+                name: 'Menu1-2-1',
+                meta: { title: 'Menu1-2-1' }
+              },
+              {
+                path: 'menu1-2-2',
+                component: () => import(/* webpackChunkName: "menu1-2-2" */'@/views/nested/menu1/menu1-2/menu1-2-2'),
+                name: 'Menu1-2-2',
+                meta: { title: 'Menu1-2-2' }
+              }
+            ]
+          },
+          {
+            path: 'menu1-3',
+            component: () => import(/* webpackChunkName: "menu1-3" */'@/views/nested/menu1/menu1-3'),
+            name: 'Menu1-3',
+            meta: { title: 'Menu1-3' }
+          }
+        ]
+      },
+      {
+        path: 'menu2',
+        component: () => import(/* webpackChunkName: "menu2" */'@/views/nested/menu2'),
+        name: 'Menu2',
+        meta: { title: 'menu2' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

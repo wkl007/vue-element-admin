@@ -36,7 +36,7 @@ export function debounce (func, delay) {
  * @param gapTime
  * @returns {Function}
  */
-function throttle (func, gapTime) {
+export function throttle (func, gapTime) {
   let _lastTime = null
 
   return function () {
