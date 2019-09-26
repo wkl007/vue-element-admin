@@ -37,6 +37,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
+          <span class="username">{{userInfo.name}}</span>
           <img :src="userInfo.avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
@@ -213,16 +214,22 @@
 
       .avatar-container {
         margin-right: 30px;
+        cursor: pointer;
 
         .avatar-wrapper {
           position: relative;
+          display: flex;
           margin-top: 5px;
+
+          .username {
+            margin-right: 10px;
+            line-height: 40px;
+          }
 
           .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 10px;
-            cursor: pointer;
           }
 
           .el-icon-caret-bottom {
