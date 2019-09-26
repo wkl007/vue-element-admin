@@ -12,19 +12,19 @@
 </template>
 
 <script>
-  import error404 from '@/assets/images/404.svg'
+  import error500 from '@/assets/images/500.svg'
   import BackButtonGroup from '@/components/BackButtonGroup'
 
   export default {
-    name: 'Exception404',
+    name: 'Exception500',
     components: {
       BackButtonGroup
     },
     data () {
       return {
-        src: error404,
-        code: '404',
-        desc: 'Oh~~您的页面好像飞走了~'
+        src: error500,
+        code: '500',
+        desc: 'Oh~~鬼知道服务器经历了什么~'
       }
     }
   }

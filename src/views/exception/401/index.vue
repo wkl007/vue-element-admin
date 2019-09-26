@@ -12,19 +12,19 @@
 </template>
 
 <script>
-  import error404 from '@/assets/images/404.svg'
+  import error401 from '@/assets/images/401.svg'
   import BackButtonGroup from '@/components/BackButtonGroup'
 
   export default {
-    name: 'Exception404',
+    name: 'Exception401',
     components: {
       BackButtonGroup
     },
     data () {
       return {
-        src: error404,
-        code: '404',
-        desc: 'Oh~~您的页面好像飞走了~'
+        src: error401,
+        code: '401',
+        desc: 'Oh~~您没有浏览这个页面的权限~'
       }
     }
   }

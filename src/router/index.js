@@ -96,19 +96,43 @@ export const constantRoutes = [
     hidden: true,
     children: [
       {
+        path: '401',
+        component: () => import(/* webpackChunkName: "401" */'@/views/exception/401'),
+        meta: {
+          title: '401'
+        }
+      },
+      {
         path: '404',
         component: () => import(/* webpackChunkName: "404" */'@/views/exception/404'),
         meta: {
           title: '404'
         }
-      }
+      },
+      {
+        path: '500',
+        component: () => import(/* webpackChunkName: "500" */'@/views/exception/500'),
+        meta: {
+          title: '500'
+        }
+      },
     ]
+  },
+  {
+    path: '/401',
+    redirect: '/exception/401',
+    hidden: true
   },
   {
     path: '/404',
     redirect: '/exception/404',
     hidden: true
-  }
+  },
+  {
+    path: '/500',
+    redirect: '/exception/500',
+    hidden: true
+  },
 ]
 
 export const asyncRoutes = [
