@@ -1,4 +1,5 @@
 # vue-element-admin
+> vue element 中后台练手项目。
 
 ## Project setup
 ```
@@ -12,12 +13,7 @@ yarn run serve
 
 ### Compiles and minifies for production
 ```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
+yarn run build:dev || yarn run build:pro
 ```
 
 ### Lints and fixes files
