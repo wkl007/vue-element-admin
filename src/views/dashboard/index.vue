@@ -13,6 +13,15 @@
         {{item}}
       </span>
     </p>
+    <!-- Admin can see this -->
+    <el-tag v-permission="['admin']" v-clipboard="{value:'admin',success:success}">admin
+    </el-tag>
+
+    <!-- Editor can see this -->
+    <el-tag v-permission="['normal']">normal</el-tag>
+
+    <!-- Editor can see this -->
+    <el-tag v-permission="['admin','normal']">Both admin or normal can see this</el-tag>
   </div>
 </template>
 
@@ -23,6 +32,11 @@
     name: 'Dashboard',
     computed: {
       ...mapGetters(['userInfo'])
+    },
+    methods: {
+      success () {
+        console.log('复制成功')
+      }
     }
   }
 </script>
@@ -35,6 +49,10 @@
       margin: 0;
       font-size: 30px;
       line-height: 46px;
+    }
+
+    .el-tag {
+      margin-right: 20px;
     }
   }
 </style>

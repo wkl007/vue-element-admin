@@ -1,4 +1,5 @@
 import defaultSettings from '@/utils/settings'
+import store from '@/store'
 
 /**
  * 判断url
@@ -9,6 +10,15 @@ export function isUrl (path) {
   /* eslint no-useless-escape:0 */
   const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/
   return reg.test(path)
+}
+
+/**
+ * 外部url
+ * @param path
+ * @returns {boolean}
+ */
+export function isExternalUrl (path) {
+  return /^(https?:|mailto:|tel:)/.test(path)
 }
 
 /**
@@ -219,10 +229,19 @@ export function filterAsyncRoutes (routes, roles) {
 }
 
 /**
- * 外部url
- * @param path
- * @returns {boolean}
+ * 判断权限
+ * @param {Array} value
+ * @returns {Boolean}
+ * @example see @/views/permission/directive.vue
  */
-export function isExternalUrl (path) {
-  return /^(https?:|mailto:|tel:)/.test(path)
+export default function checkPermission (value) {
+  if (value && value instanceof Array && value.length > 0) {
+    const { userInfo: { roles } } = store.getters
+    const permissionRoles = value
+
+    return roles.some(role => { return permissionRoles.includes(role) })
+  } else {
+    console.error(`need roles! Like v-permission="['admin','editor']"`)
+    return false
+  }
 }
