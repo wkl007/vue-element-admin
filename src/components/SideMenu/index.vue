@@ -8,9 +8,9 @@
         :unique-opened="true"
         :collapse-transition="false"
         mode="vertical"
-        background-color="#304156"
-        text-color=" #bfcbd9"
-        active-text-color="#409eff"
+        :background-color="variables.menubg"
+        :text-color="variables.menutext"
+        :active-text-color="variables.menuactivetext"
       >
         <side-menu-item
           v-for="item in permission.routes"
@@ -27,6 +27,7 @@
   import { mapGetters } from 'vuex'
   import SideMenuLogo from '@/components/SideMenu/Logo'
   import SideMenuItem from '@/components/SideMenu/SideMenuItem'
+  import variables from '@/assets/styles/variables.scss'
 
   export default {
     name: 'SideMenu',
@@ -40,6 +41,9 @@
         const { meta, path } = route
         if (meta.activeMenu) return meta.activeMenu
         return path
+      },
+      variables () {
+        return variables
       },
       ...mapGetters(['settings', 'permission'])
     }

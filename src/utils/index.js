@@ -86,8 +86,7 @@ export function bubble_sort (arr, fn) {
  * @returns {boolean}
  */
 export function hasClass (el, className) {
-  let reg = new RegExp('(^|\\s)' + className + '(\\s|$)')
-  return reg.test(el.className)
+  return !!el.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'))
 }
 
 /**
@@ -96,13 +95,7 @@ export function hasClass (el, className) {
  * @param className
  */
 export function addClass (el, className) {
-  if (hasClass(el, className)) {
-    return
-  }
-
-  let newClass = el.className.split(' ')
-  newClass.push(className)
-  el.className = newClass.join(' ')
+  if (!hasClass(el, className)) el.className += ' ' + className
 }
 
 /**
@@ -111,12 +104,29 @@ export function addClass (el, className) {
  * @param className
  */
 export function removeClass (el, className) {
-  if (!hasClass(el, className)) {
-    return
+  if (hasClass(el, className)) {
+    const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)')
+    el.className = el.className.replace(reg, ' ')
   }
+}
 
-  let reg = new RegExp('(^|\\s)' + className + '(\\s|$)', 'g')
-  el.className = el.className.replace(reg, ' ')
+/**
+ * 切换类名
+ * @param el
+ * @param className
+ */
+export function toggleClass (el, className) {
+  if (!el || !className) return
+  let classString = el.className
+  const nameIndex = classString.indexOf(className)
+  if (nameIndex === -1) {
+    classString += '' + className
+  } else {
+    classString =
+      classString.substr(0, nameIndex) +
+      classString.substr(nameIndex + className.length)
+  }
+  el.className = classString
 }
 
 /**

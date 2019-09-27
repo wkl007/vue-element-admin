@@ -4,6 +4,7 @@ import storage from 'good-storage'
 export const LOGIN_STATUS = 'Login_Status'
 export const ACCESS_TOKEN = 'Access_Token'
 export const USER_INFO = 'User_Info'
+export const SETTINGS = 'Settings'
 
 /**
  * 设置cookie

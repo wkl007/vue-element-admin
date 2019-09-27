@@ -1,11 +1,11 @@
 <template>
   <div class="dashboard">
     <p class="dashboard-text">
-      姓名：
+      <span>姓名：</span>
       <span>{{userInfo.name}}</span>
     </p>
     <p class="dashboard-text">
-      角色：
+      <span>角色：</span>
       <span
         v-for="(item,index) in userInfo.roles"
         :key="index"
@@ -13,15 +13,13 @@
         {{item}}
       </span>
     </p>
-    <!-- Admin can see this -->
-    <el-tag v-permission="['admin']" v-clipboard="{value:'admin',success:success}">admin
-    </el-tag>
-
-    <!-- Editor can see this -->
-    <el-tag v-permission="['normal']">normal</el-tag>
-
-    <!-- Editor can see this -->
-    <el-tag v-permission="['admin','normal']">Both admin or normal can see this</el-tag>
+    <p class="dashboard-text">
+      <span>权限测试：</span>
+      <el-tag v-permission="['admin']" v-clipboard="{value:'admin',success:success}">管理员可见
+      </el-tag>
+      <el-tag v-permission="['normal']">普通用户可见</el-tag>
+      <el-tag v-permission="['admin','normal']">管理员与普通用户都可见</el-tag>
+    </p>
   </div>
 </template>
 
@@ -46,8 +44,10 @@
     margin: 30px;
 
     &-text {
-      margin: 0;
-      font-size: 30px;
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 24px;
       line-height: 46px;
     }
 

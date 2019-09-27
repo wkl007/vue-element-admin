@@ -16,6 +16,7 @@
         </transition>
       </div>
     </div>
+    <settings-drawer/>
   </div>
 </template>
 
@@ -23,6 +24,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import SideMenu from '@/components/SideMenu'
   import NavBar from '@/components/NavBar'
+  import SettingsDrawer from '@/components/SetttingsDrawer'
   import { resizeMixin } from '@/mixins'
 
   export default {
@@ -30,7 +32,8 @@
     mixins: [resizeMixin],
     components: {
       SideMenu,
-      NavBar
+      NavBar,
+      SettingsDrawer
     },
     computed: {
       key () {

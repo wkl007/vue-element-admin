@@ -10,3 +10,15 @@ $subMenuBg: #1f2d3d;
 $subMenuHover: #001528;
 
 $sideBarWidth: 240px;
+
+/* stylelint-disable */
+:export {
+  menutext: $menuText;
+  menuactivetext: $menuActiveText;
+  submenuactivetext: $subMenuActiveText;
+  menubg: $menuBg;
+  menuhover: $menuHover;
+  submenubg: $subMenuBg;
+  submenuhover: $subMenuHover;
+  sidebarwidth: $sideBarWidth;
+}

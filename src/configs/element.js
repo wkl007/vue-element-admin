@@ -25,6 +25,7 @@ import {
   Container,
   DatePicker,
   Dialog,
+  Drawer,
   Divider,
   Dropdown,
   DropdownItem,
@@ -154,6 +155,7 @@ Vue.use(Backtop)
 Vue.use(PageHeader)
 Vue.use(CascaderPanel)
 Vue.use(Scrollbar)
+Vue.use(Drawer)
 
 const { directive: loadingDirective, service: loadingService } = Loading
 const msgBox = MessageBox

@@ -68,10 +68,18 @@ export const constantRoutes = [
     redirect: '/example/table',
     name: 'Example',
     meta: {
-      title: '例子',
+      title: '示例',
       icon: 'el-icon-orange'
     },
     children: [
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import(/* webpackChunkName: "table" */'@/views/example/tree'),
+        meta: {
+          title: '树',
+        }
+      },
       {
         path: 'table',
         name: 'Table',
@@ -81,13 +89,21 @@ export const constantRoutes = [
         }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import(/* webpackChunkName: "table" */'@/views/example/tree'),
+        path: 'theme',
+        name: 'Theme',
+        component: () => import(/* webpackChunkName: "clipboard" */'@/views/example/theme'),
         meta: {
-          title: '树',
+          title: '换肤',
         }
-      }
+      },
+      {
+        path: 'clipboard',
+        name: 'Clipboard',
+        component: () => import(/* webpackChunkName: "clipboard" */'@/views/example/clipboard'),
+        meta: {
+          title: '剪贴板',
+        }
+      },
     ]
   },
   {
@@ -160,7 +176,7 @@ export const asyncRoutes = [
     redirect: '/nested/menu1',
     name: 'Nested',
     meta: {
-      title: 'Nested',
+      title: '嵌套菜单',
       icon: 'el-icon-more'
     },
     children: [
@@ -168,31 +184,31 @@ export const asyncRoutes = [
         path: 'menu1',
         component: () => import(/* webpackChunkName: "menu1" */'@/views/nested/menu1'),
         name: 'Menu1',
-        meta: { title: 'Menu1' },
+        meta: { title: '菜单 1' },
         children: [
           {
             path: 'menu1-1',
             component: () => import(/* webpackChunkName: "menu1-1" */'@/views/nested/menu1/menu1-1'),
             name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
+            meta: { title: '菜单 1-1' }
           },
           {
             path: 'menu1-2',
             component: () => import(/* webpackChunkName: "menu1-2" */'@/views/nested/menu1/menu1-2'),
             name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
+            meta: { title: '菜单 1-2' },
             children: [
               {
                 path: 'menu1-2-1',
                 component: () => import(/* webpackChunkName: "menu1-2-1" */'@/views/nested/menu1/menu1-2/menu1-2-1'),
                 name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
+                meta: { title: '菜单 1-2-1' }
               },
               {
                 path: 'menu1-2-2',
                 component: () => import(/* webpackChunkName: "menu1-2-2" */'@/views/nested/menu1/menu1-2/menu1-2-2'),
                 name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
+                meta: { title: '菜单 1-2-2' }
               }
             ]
           },
@@ -200,7 +216,7 @@ export const asyncRoutes = [
             path: 'menu1-3',
             component: () => import(/* webpackChunkName: "menu1-3" */'@/views/nested/menu1/menu1-3'),
             name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
+            meta: { title: '菜单 1-3' }
           }
         ]
       },
@@ -208,7 +224,7 @@ export const asyncRoutes = [
         path: 'menu2',
         component: () => import(/* webpackChunkName: "menu2" */'@/views/nested/menu2'),
         name: 'Menu2',
-        meta: { title: 'menu2' }
+        meta: { title: '菜单 2' }
       }
     ]
   },
@@ -216,7 +232,7 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
-  mode: 'history', // require service support
+  mode: 'hash', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

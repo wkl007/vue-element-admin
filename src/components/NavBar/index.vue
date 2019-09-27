@@ -35,6 +35,11 @@
       </el-breadcrumb>
     </div>
     <div class="right-menu">
+      <template
+        v-if="settings.device!=='mobile'"
+      >
+        <screen-full class="right-menu-item hover-effect"/>
+      </template>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <span class="username">{{userInfo.name}}</span>
@@ -42,6 +47,9 @@
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
+          <a href="javascript:;" @click="openSettings">
+            <el-dropdown-item>设置</el-dropdown-item>
+          </a>
           <router-link to="/">
             <el-dropdown-item>
               首页
@@ -63,9 +71,13 @@
   import pathToRegexp from 'path-to-regexp'
   import { mapGetters, mapActions } from 'vuex'
   import { resetRouter } from '@/router'
+  import ScreenFull from '@/components/ScreenFull'
 
   export default {
     name: 'NavBar',
+    components: {
+      ScreenFull
+    },
     computed: {
       ...mapGetters(['settings', 'userInfo'])
     },
@@ -102,6 +114,12 @@
       toggleSideBar () {
         let settings = { ...this.settings }
         settings.openSideMenu = !this.settings.openSideMenu
+        this.setSettings(settings)
+      },
+      // 打开设置
+      openSettings () {
+        let settings = { ...this.settings }
+        settings.openSettings = true
         this.setSettings(settings)
       },
       // 路径处理
@@ -187,6 +205,7 @@
     }
 
     .right-menu {
+      display: flex;
       float: right;
       height: 100%;
 
@@ -200,6 +219,7 @@
         padding: 0 8px;
         color: #5a5e66;
         font-size: 18px;
+        line-height: 50px;
         vertical-align: text-bottom;
 
         &.hover-effect {

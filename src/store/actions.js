@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, LOGIN_STATUS, removeSessionStorage, saveSessionStorage } from '@/utils/cache'
+import { ACCESS_TOKEN, LOGIN_STATUS, removeSessionStorage, saveSessionStorage, SETTINGS } from '@/utils/cache'
 import * as types from './mutationTypes'
 
 /**
@@ -25,6 +25,16 @@ export const setAccessToken = ({ commit, state }, query) => {
 }
 
 /**
+ * 设置
+ * @param commit
+ * @param state
+ * @param query
+ */
+export const setSettings = ({ commit, state }, query) => {
+  commit(types.SET_SETTINGS, saveSessionStorage(SETTINGS, query))
+}
+
+/**
  * 设置用户信息
  * @param commit
  * @param state
@@ -42,14 +52,4 @@ export const setUserInfo = ({ commit, state }, query) => {
  */
 export const setPermission = ({ commit, state }, query) => {
   commit(types.SET_PERMISSION, query)
-}
-
-/**
- * 设置
- * @param commit
- * @param state
- * @param query
- */
-export const setSettings = ({ commit, state }, query) => {
-  commit(types.SET_SETTINGS, query)
 }
