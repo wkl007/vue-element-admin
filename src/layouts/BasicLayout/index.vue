@@ -104,7 +104,7 @@
       width: calc(100% - 54px);
     }
 
-    .mobile .fixed-header {
+    &.mobile .fixed-header {
       width: 100%;
     }
 
