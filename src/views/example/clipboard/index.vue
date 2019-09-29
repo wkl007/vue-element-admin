@@ -38,7 +38,7 @@
   import handleClipboard from '@/utils/clipboard'
 
   export default {
-    name: 'exampleClipboard',
+    name: 'ExampleClipboard',
     data () {
       return {
         activeName: 'directly',

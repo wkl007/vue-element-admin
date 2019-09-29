@@ -72,7 +72,7 @@
   import '@/assets/styles/custom-theme/index.css'
 
   export default {
-    name: 'exampleTheme',
+    name: 'ExampleTheme',
     data () {
       return {
         theme: false,

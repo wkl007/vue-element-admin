@@ -8,6 +8,6 @@
 
 <script>
   export default {
-    name: 'menu1'
+    name: 'Menu1'
   }
 </script>

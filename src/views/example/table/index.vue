@@ -256,7 +256,7 @@
     'pageviews': 1723
   }]
   export default {
-    name: 'exampleTable',
+    name: 'ExampleTable',
     filters: {
       statusFilter (status) {
         const statusMap = {

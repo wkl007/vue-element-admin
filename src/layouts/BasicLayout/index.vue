@@ -6,13 +6,16 @@
       @click="handleSetting"
     ></div>
     <side-menu/>
-    <div class="main-container">
+    <div class="main-container" :class="{hasTagsView:settings.tagsView}">
       <div :class="{'fixed-header':settings.fixedHeader}">
         <nav-bar/>
+        <tags-view v-if="settings.tagsView"/>
       </div>
       <div class="main-content">
         <transition name="fade-transform" mode="out-in">
-          <router-view :key="key"/>
+          <keep-alive :include="tagsView.cachedViews">
+            <router-view :key="key"/>
+          </keep-alive>
         </transition>
       </div>
     </div>
@@ -25,6 +28,7 @@
   import SideMenu from '@/components/SideMenu'
   import NavBar from '@/components/NavBar'
   import SettingsDrawer from '@/components/SetttingsDrawer'
+  import TagsView from '@/components/TagsView'
   import { resizeMixin } from '@/mixins'
 
   export default {
@@ -33,7 +37,8 @@
     components: {
       SideMenu,
       NavBar,
-      SettingsDrawer
+      SettingsDrawer,
+      TagsView
     },
     computed: {
       key () {
@@ -47,7 +52,7 @@
           mobile: this.settings.device === 'mobile',
         }
       },
-      ...mapGetters(['settings'])
+      ...mapGetters(['settings', 'tagsView'])
     },
     methods: {
       handleSetting () {
@@ -122,6 +127,16 @@
 
       .fixed-header + .main-content {
         padding-top: 50px;
+      }
+
+      &.hasTagsView {
+        .main-content {
+          min-height: calc(100vh - 84px);
+        }
+
+        .fixed-header + .main-content {
+          padding-top: 84px;
+        }
       }
     }
   }

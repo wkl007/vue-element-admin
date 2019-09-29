@@ -7,3 +7,5 @@ export const SET_USER_INFO = 'SET_USER_INFO'
 export const SET_PERMISSION = 'SET_PERMISSION'
 
 export const SET_SETTINGS = 'SET_SETTINGS'
+
+export const SET_TAGS_VIEW = 'SET_TAGS_VIEW'

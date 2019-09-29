@@ -28,17 +28,20 @@ Vue.use(Router)
     breadcrumb: false            如果设置为false，则不会在breadcrumb面包屑中显示
     noCache: true                如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
     activeMenu: '/example/list'  如果设置，则侧导航高亮
+    affix: true                   如果设置为true，则当前tag会被固定在 tags-view中
   }
  */
 
 export const constantRoutes = [
   {
     path: '/user',
+    name: 'User',
     component: UserLayout,
     hidden: true,
     children: [
       {
         path: 'login',
+        name: 'Login',
         component: () => import(/* webpackChunkName: "login" */'@/views/login'),
         meta: {
           title: '登录'
@@ -57,16 +60,17 @@ export const constantRoutes = [
         component: () => import(/* webpackChunkName: "dashboard" */'@/views/dashboard'),
         meta: {
           title: '仪表板',
-          icon: 'el-icon-s-home'
+          icon: 'el-icon-s-home',
+          affix: true
         }
       }
     ]
   },
   {
     path: '/example',
+    name: 'Example',
     component: BasicLayout,
     redirect: '/example/table',
-    name: 'Example',
     meta: {
       title: '示例',
       icon: 'el-icon-orange'
@@ -74,7 +78,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'tree',
-        name: 'Tree',
+        name: 'ExampleTree',
         component: () => import(/* webpackChunkName: "table" */'@/views/example/tree'),
         meta: {
           title: '树',
@@ -82,7 +86,7 @@ export const constantRoutes = [
       },
       {
         path: 'table',
-        name: 'Table',
+        name: 'ExampleTable',
         component: () => import(/* webpackChunkName: "table" */'@/views/example/table'),
         meta: {
           title: '表格',
@@ -90,7 +94,7 @@ export const constantRoutes = [
       },
       {
         path: 'theme',
-        name: 'Theme',
+        name: 'ExampleTheme',
         component: () => import(/* webpackChunkName: "clipboard" */'@/views/example/theme'),
         meta: {
           title: '换肤',
@@ -98,7 +102,7 @@ export const constantRoutes = [
       },
       {
         path: 'clipboard',
-        name: 'Clipboard',
+        name: 'ExampleClipboard',
         component: () => import(/* webpackChunkName: "clipboard" */'@/views/example/clipboard'),
         meta: {
           title: '剪贴板',
@@ -108,11 +112,13 @@ export const constantRoutes = [
   },
   {
     path: '/exception',
+    name: 'Exception',
     component: BasicLayout,
     hidden: true,
     children: [
       {
         path: '401',
+        name: 'Exception401',
         component: () => import(/* webpackChunkName: "401" */'@/views/exception/401'),
         meta: {
           title: '401'
@@ -120,6 +126,7 @@ export const constantRoutes = [
       },
       {
         path: '404',
+        name: 'Exception404',
         component: () => import(/* webpackChunkName: "404" */'@/views/exception/404'),
         meta: {
           title: '404'
@@ -127,6 +134,7 @@ export const constantRoutes = [
       },
       {
         path: '500',
+        name: 'Exception500',
         component: () => import(/* webpackChunkName: "500" */'@/views/exception/500'),
         meta: {
           title: '500'
@@ -161,7 +169,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        name: 'Form',
+        name: 'ExampleForm',
         component: () => import(/* webpackChunkName: "form" */'@/views/form'),
         meta: {
           title: '表单',
@@ -174,7 +182,6 @@ export const asyncRoutes = [
     path: '/nested',
     component: BasicLayout,
     redirect: '/nested/menu1',
-    name: 'Nested',
     meta: {
       title: '嵌套菜单',
       icon: 'el-icon-more'
@@ -182,48 +189,48 @@ export const asyncRoutes = [
     children: [
       {
         path: 'menu1',
-        component: () => import(/* webpackChunkName: "menu1" */'@/views/nested/menu1'),
         name: 'Menu1',
+        component: () => import(/* webpackChunkName: "menu1" */'@/views/nested/menu1'),
         meta: { title: '菜单 1' },
         children: [
           {
             path: 'menu1-1',
-            component: () => import(/* webpackChunkName: "menu1-1" */'@/views/nested/menu1/menu1-1'),
             name: 'Menu1-1',
+            component: () => import(/* webpackChunkName: "menu1-1" */'@/views/nested/menu1/menu1-1'),
             meta: { title: '菜单 1-1' }
           },
           {
             path: 'menu1-2',
-            component: () => import(/* webpackChunkName: "menu1-2" */'@/views/nested/menu1/menu1-2'),
             name: 'Menu1-2',
+            component: () => import(/* webpackChunkName: "menu1-2" */'@/views/nested/menu1/menu1-2'),
             meta: { title: '菜单 1-2' },
             children: [
               {
                 path: 'menu1-2-1',
-                component: () => import(/* webpackChunkName: "menu1-2-1" */'@/views/nested/menu1/menu1-2/menu1-2-1'),
                 name: 'Menu1-2-1',
+                component: () => import(/* webpackChunkName: "menu1-2-1" */'@/views/nested/menu1/menu1-2/menu1-2-1'),
                 meta: { title: '菜单 1-2-1' }
               },
               {
                 path: 'menu1-2-2',
-                component: () => import(/* webpackChunkName: "menu1-2-2" */'@/views/nested/menu1/menu1-2/menu1-2-2'),
                 name: 'Menu1-2-2',
+                component: () => import(/* webpackChunkName: "menu1-2-2" */'@/views/nested/menu1/menu1-2/menu1-2-2'),
                 meta: { title: '菜单 1-2-2' }
               }
             ]
           },
           {
             path: 'menu1-3',
-            component: () => import(/* webpackChunkName: "menu1-3" */'@/views/nested/menu1/menu1-3'),
             name: 'Menu1-3',
+            component: () => import(/* webpackChunkName: "menu1-3" */'@/views/nested/menu1/menu1-3'),
             meta: { title: '菜单 1-3' }
           }
         ]
       },
       {
         path: 'menu2',
-        component: () => import(/* webpackChunkName: "menu2" */'@/views/nested/menu2'),
         name: 'Menu2',
+        component: () => import(/* webpackChunkName: "menu2" */'@/views/nested/menu2'),
         meta: { title: '菜单 2' }
       }
     ]

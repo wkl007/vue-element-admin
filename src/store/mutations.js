@@ -15,6 +15,9 @@ const mutations = {
   },
   [types.SET_SETTINGS] (state, settings) {
     state.settings = settings
+  },
+  [types.SET_TAGS_VIEW] (state, tagsView) {
+    state.tagsView = tagsView
   }
 }
 

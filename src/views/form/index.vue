@@ -53,7 +53,7 @@
 
 <script>
   export default {
-    name: 'exampleForm',
+    name: 'ExampleForm',
     data () {
       return {
         form: {
