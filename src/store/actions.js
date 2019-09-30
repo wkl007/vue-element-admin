@@ -54,6 +54,11 @@ export const setPermission = ({ commit, state }, query) => {
   commit(types.SET_PERMISSION, query)
 }
 
+export const addView = ({ dispatch }, query) => {
+  dispatch('addVisitedView', query)
+  dispatch('addCachedView', query)
+}
+
 /**
  * 添加访问页面
  * @param commit
@@ -88,6 +93,17 @@ export const addCachedView = ({ commit, state }, query) => {
   }
 }
 
+export const deleteView = ({ dispatch, state }, query) => {
+  return new Promise(resolve => {
+    dispatch('deleteVisitedView', query)
+    dispatch('deleteCachedView', query)
+    resolve({
+      visitedViews: [...state.tagsView.visitedViews],
+      cachedViews: [...state.tagsView.cachedViews],
+    })
+  })
+}
+
 /**
  * 删除访问页面
  * @param commit
@@ -95,15 +111,18 @@ export const addCachedView = ({ commit, state }, query) => {
  * @param query
  */
 export const deleteVisitedView = ({ commit, state }, query) => {
-  let { tagsView: { visitedViews, cachedViews } } = state
-  for (const [i, v] of visitedViews.entries()) {
-    if (v.path === query.path) {
-      visitedViews.splice(i, 1)
-      break
+  return new Promise(resolve => {
+    let { tagsView: { visitedViews, cachedViews } } = state
+    for (const [i, v] of visitedViews.entries()) {
+      if (v.path === query.path) {
+        visitedViews.splice(i, 1)
+        break
+      }
     }
-  }
-  let tagsView = { cachedViews, visitedViews }
-  commit(types.SET_TAGS_VIEW, tagsView)
+    let tagsView = { cachedViews, visitedViews }
+    commit(types.SET_TAGS_VIEW, tagsView)
+    resolve([...state.tagsView.visitedViews])
+  })
 }
 
 /**
@@ -113,16 +132,30 @@ export const deleteVisitedView = ({ commit, state }, query) => {
  * @param query
  */
 export const deleteCachedView = ({ commit, state }, query) => {
-  let { tagsView: { visitedViews, cachedViews } } = state
-  for (const i of cachedViews) {
-    if (i === query.name) {
-      const index = cachedViews.indexOf(i)
-      cachedViews.splice(index, 1)
-      break
+  return new Promise(resolve => {
+    let { tagsView: { visitedViews, cachedViews } } = state
+    for (const i of cachedViews) {
+      if (i === query.name) {
+        const index = cachedViews.indexOf(i)
+        cachedViews.splice(index, 1)
+        break
+      }
     }
-  }
-  let tagsView = { cachedViews, visitedViews }
-  commit(types.SET_TAGS_VIEW, tagsView)
+    let tagsView = { cachedViews, visitedViews }
+    commit(types.SET_TAGS_VIEW, tagsView)
+    resolve([...state.tagsView.cachedViews])
+  })
+}
+
+export const deleteOtherViews = ({ dispatch, state }, query) => {
+  return new Promise(resolve => {
+    dispatch('deleteOtherVisitedViews', query)
+    dispatch('deleteOtherCachedViews', query)
+    resolve({
+      visitedViews: [...state.tagsView.visitedViews],
+      cachedViews: [...state.tagsView.cachedViews],
+    })
+  })
 }
 
 /**
@@ -132,12 +165,15 @@ export const deleteCachedView = ({ commit, state }, query) => {
  * @param query
  */
 export const deleteOtherVisitedViews = ({ commit, state }, query) => {
-  let { tagsView: { visitedViews, cachedViews } } = state
-  let data = visitedViews.filter(v => {
-    return v.meta.affix || v.path === query.path
+  return new Promise(resolve => {
+    let { tagsView: { visitedViews, cachedViews } } = state
+    let data = visitedViews.filter(v => {
+      return v.meta.affix || v.path === query.path
+    })
+    let tagsView = { cachedViews, visitedViews: data }
+    commit(types.SET_TAGS_VIEW, tagsView)
+    resolve([...state.tagsView.visitedViews])
   })
-  let tagsView = { cachedViews, visitedViews: data }
-  commit(types.SET_TAGS_VIEW, tagsView)
 }
 
 /**
@@ -147,17 +183,31 @@ export const deleteOtherVisitedViews = ({ commit, state }, query) => {
  * @param query
  */
 export const deleteOtherCachedViews = ({ commit, state }, query) => {
-  let { tagsView: { visitedViews, cachedViews } } = state
-  let data
-  for (const i of cachedViews) {
-    if (i === query.name) {
-      const index = state.cachedViews.indexOf(i)
-      data = cachedViews.slice(index, index + 1)
-      break
+  return new Promise(resolve => {
+    let { tagsView: { visitedViews, cachedViews } } = state
+    let data = []
+    for (const i of cachedViews) {
+      if (i === query.name) {
+        const index = state.tagsView.cachedViews.indexOf(i)
+        data = cachedViews.slice(index, index + 1)
+        break
+      }
     }
-  }
-  let tagsView = { cachedViews: data, visitedViews }
-  commit(types.SET_TAGS_VIEW, tagsView)
+    let tagsView = { cachedViews: data, visitedViews }
+    commit(types.SET_TAGS_VIEW, tagsView)
+    resolve([...state.tagsView.cachedViews])
+  })
+}
+
+export const deleteAllViews = ({ dispatch, state }, query) => {
+  return new Promise(resolve => {
+    dispatch('deleteAllVisitedViews', query)
+    dispatch('deleteAllCachedViews', query)
+    resolve({
+      visitedViews: [...state.tagsView.visitedViews],
+      cachedViews: [...state.tagsView.cachedViews],
+    })
+  })
 }
 
 /**
@@ -167,10 +217,13 @@ export const deleteOtherCachedViews = ({ commit, state }, query) => {
  * @param query
  */
 export const deleteAllVisitedViews = ({ commit, state }, query) => {
-  let { tagsView: { visitedViews, cachedViews } } = state
-  visitedViews = visitedViews.filter(tag => tag.meta.affix)
-  let tagsView = { cachedViews, visitedViews }
-  commit(types.SET_TAGS_VIEW, tagsView)
+  return new Promise(resolve => {
+    let { tagsView: { visitedViews, cachedViews } } = state
+    visitedViews = visitedViews.filter(tag => tag.meta.affix)
+    let tagsView = { cachedViews, visitedViews }
+    commit(types.SET_TAGS_VIEW, tagsView)
+    resolve([...state.tagsView.visitedViews])
+  })
 }
 
 /**
@@ -180,9 +233,12 @@ export const deleteAllVisitedViews = ({ commit, state }, query) => {
  * @param query
  */
 export const deleteAllCachedViews = ({ commit, state }, query) => {
-  let { tagsView: { visitedViews } } = state
-  let tagsView = { cachedViews: [], visitedViews }
-  commit(types.SET_TAGS_VIEW, tagsView)
+  return new Promise(resolve => {
+    let { tagsView: { visitedViews } } = state
+    let tagsView = { cachedViews: [], visitedViews }
+    commit(types.SET_TAGS_VIEW, tagsView)
+    resolve([...state.tagsView.cachedViews])
+  })
 }
 
 /**

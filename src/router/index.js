@@ -59,7 +59,7 @@ export const constantRoutes = [
         name: 'Dashboard',
         component: () => import(/* webpackChunkName: "dashboard" */'@/views/dashboard'),
         meta: {
-          title: '仪表板',
+          title: '欢迎页',
           icon: 'el-icon-s-home',
           affix: true
         }
@@ -108,6 +108,18 @@ export const constantRoutes = [
           title: '剪贴板',
         }
       },
+    ]
+  },
+  {
+    path: '/redirect',
+    name: 'Redirect',
+    component: BasicLayout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import(/* webpackChunkName: "redirect" */'@/views/redirect/index'),
+      }
     ]
   },
   {

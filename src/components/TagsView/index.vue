@@ -113,8 +113,7 @@
       addTags () {
         const { name } = this.$route
         if (name) {
-          this.addVisitedView(this.$route)
-          this.addCachedView(this.$route)
+          this.addView(this.$route)
         }
       },
       // 移动到当前tag
@@ -133,25 +132,33 @@
         })
       },
       // 刷新当前页面
-      refreshSelectedTag (route) {
-        this.deleteCachedView(route)
+      async refreshSelectedTag (route) {
+        await this.deleteCachedView(route)
         const { fullPath } = route
-        /* this.$nextTick(() => {
+        this.$nextTick(() => {
           this.$router.replace({
             path: `/redirect${fullPath}`
           })
-        }) */
+        })
       },
       // 关闭当前页面标签
-      closeSelectedTag (route) {},
+      async closeSelectedTag (route) {
+        const { visitedViews } = await this.deleteView(route)
+        if (this.isActive(route)) {
+          this.toLastView(visitedViews, route)
+        }
+      },
       // 关闭其他页面
-      closeOtherTags () {},
+      async closeOtherTags () {
+        this.$router.push(this.selectedTag)
+        await this.deleteOtherViews(this.selectedTag)
+        this.moveToCurrentTag()
+      },
       // 关闭所有页面
-      closeAllTags (route) {
-        /*
-        this.deleteAllVisitedViews()
-        this.deleteAllCachedViews()
-        */
+      async closeAllTags (route) {
+        const { visitedViews } = await this.deleteAllViews()
+        if (this.affixTags.some(tag => tag.path === route.path)) return
+        this.toLastView(visitedViews, route)
       },
       // 前往最后一个标签
       toLastView (visitedViews, route) {
@@ -186,7 +193,7 @@
       closeMenu () {
         this.visible = false
       },
-      ...mapActions(['addVisitedView', 'addCachedView', 'updateVisitedView', 'deleteCachedView', 'deleteAllVisitedViews', 'deleteAllCachedViews'])
+      ...mapActions(['addView', 'addVisitedView', 'updateVisitedView', 'deleteCachedView', 'deleteView', 'deleteOtherViews', 'deleteAllViews'])
     }
   }
 </script>
